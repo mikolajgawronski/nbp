@@ -52,4 +52,12 @@ class CurrencyTest extends TestCase
         $result = $this->currencyRepository->findByCode('XYZ');
         self::assertNull($result);
     }
+
+    public function test_update_currency_rates(): void
+    {
+        $countPreUpdate = $this->currencyRepository->findAll()->count();
+        $this->currencyService->updateRates();
+        $countPostUpdate = $this->currencyRepository->findAll()->count();
+        self::assertGreaterThan($countPreUpdate, $countPostUpdate);
+    }
 }
