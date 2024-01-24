@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Http\Interfaces\CurrencyFactoryInterface;
+use App\Http\Interfaces\CurrencyRepositoryInterface;
+use App\Http\Interfaces\CurrencyServiceInterface;
 use App\Http\Interfaces\NbpClientInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -17,6 +20,9 @@ class CurrencyTest extends TestCase
         parent::setUp();
 
         $this->nbpClient = $this->app->make(NbpClientInterface::class);
+        $this->currencyRepository = $this->app->make(CurrencyRepositoryInterface::class);
+        $this->currencyFactory = $this->app->make(CurrencyFactoryInterface::class);
+        $this->currencyService = $this->app->make(CurrencyServiceInterface::class);
     }
 
     public function test_fail_fetching_fake_endpoint(): void
@@ -33,5 +39,17 @@ class CurrencyTest extends TestCase
         ]);
 
         self::assertIsArray($response);
+    }
+
+    public function test_factory_create_currency(): void
+    {
+        $result = $this->currencyFactory->create('ABC', 'Fake Testing Currency', 1.0);
+        self::assertNotNull($result);
+    }
+
+    public function test_fail_find_currency_by_code(): void
+    {
+        $result = $this->currencyRepository->findByCode('XYZ');
+        self::assertNull($result);
     }
 }
