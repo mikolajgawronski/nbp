@@ -3,8 +3,12 @@
 namespace App\Providers;
 
 use App\Http\Clients\NbpClient;
+use App\Http\Factories\CurrencyFactory;
+use App\Http\Interfaces\CurrencyFactoryInterface;
+use App\Http\Interfaces\CurrencyRepositoryInterface;
 use App\Http\Interfaces\CurrencyServiceInterface;
 use App\Http\Interfaces\NbpClientInterface;
+use App\Http\Repositories\CurrencyRepository;
 use App\Http\Services\CurrencyService;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +27,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             CurrencyServiceInterface::class,
             CurrencyService::class,
+        );
+
+        $this->app->bind(
+            CurrencyRepositoryInterface::class,
+            CurrencyRepository::class,
+        );
+
+        $this->app->bind(
+            CurrencyFactoryInterface::class,
+            CurrencyFactory::class,
         );
     }
 

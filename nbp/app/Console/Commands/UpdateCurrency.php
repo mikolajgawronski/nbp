@@ -18,5 +18,7 @@ class UpdateCurrency extends Command
     public function handle()
     {
         $this->currencyService->updateRates();
+
+        echo 'Currency rates updated.\n';
     }
 }

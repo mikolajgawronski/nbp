@@ -14,4 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 class Currency extends Model
 {
     use HasFactory;
+
+    public $fillable = ['rate'];
 }
